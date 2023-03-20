@@ -17,8 +17,14 @@ public class Calculatrice {
      *
      * @return int la somme des deux nombres.
      */
-    public int additionne( int nb1, int nb2 ) {
-        return Integer.MIN_VALUE;
+    public int additionne(int nb1, int nb2) {
+        int somme = 0;
+        try {
+            somme = Math.addExact(nb1, nb2);
+        } catch (ArithmeticException e) {
+            somme = 0;
+        }
+        return somme;
     }
 
     /**
@@ -29,27 +35,47 @@ public class Calculatrice {
      * @param nb2 String le deuxième nombre.
      *
      * @return String la somme des deux nombres ou un message d'erreur si les
-     *         deux nombres ne peuvent pas être additionné.
+     * deux nombres ne peuvent pas être additionné.
      */
-    public String additionne( String nb1, String nb2 ) {
-        return "";
+    public String additionne(String nb1, String nb2) {
+        String result = "";
+        try {
+            int entier1 = Integer.parseInt(nb1);
+            try {
+                int entier2 = Integer.parseInt(nb2);
+                try {
+                    int somme = Math.addExact(entier1, entier2);
+                    result = Integer.toString(somme);
+                } catch (ArithmeticException e) {
+                    result = "Erreur : dépassement de capacité lors de l'addition";
+                }
+            } catch (NumberFormatException e) {
+                result = "Erreur : le deuxième paramètre n'est pas un nombre entier valide";
+            }
+        } catch (NumberFormatException e) {
+            result = "Erreur : le premier paramètre n'est pas un nombre entier valide";
+        }
+
+        return result;
     }
 
-
     /**
-     * Divise le nb1 par le nb2. Les deux nombres sont passé en
-     * paramètre à la méthode.
+     * Divise le nb1 par le nb2. Les deux nombres sont passé en paramètre à la
+     * méthode.
      *
      * @param nb1 int le nombre à diviser
      * @param nb2 int le diviseur
      *
      * @return double la division de nb1 par nb2.
      */
-    public double divise( int nb1, int nb2 ) {
-        return Double.MIN_VALUE;
+    public double divise(int nb1, int nb2) {
+        double resultat;
+        try {
+            resultat = nb1 / nb2;
+        } catch (ArithmeticException e) {
+            resultat = Double.NaN;
+        }
+        return resultat;
     }
-
-
-
 
 }
